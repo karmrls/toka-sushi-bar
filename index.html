@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Prototipo: oculto de buscadores hasta que el cliente lo apruebe. Quitar esta línea al publicar la versión final. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Toka Sushi Bar</title>
+<meta name="description" content="Toka Sushi Bar — menú y precios: rollos, arroces, aguachiles, mixología y postres.">
+<link rel="icon" href="assets/logo-toka.png">
+<link rel="stylesheet" href="assets/fonts.css">
+<style>
+  :root{
+    --red:#9e0a20;
+    --red-dark:#7c0818;
+    --cream:#fbe8c4;
+    --ink:#1c1716;
+    --ink-soft:#5f5753;
+    --paper:#fbf7f0;
+    --card:#ffffff;
+    --line:#ece3d6;
+    --night:#161112;
+    --radius:14px;
+    --max:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Outfit",system-ui,sans-serif;background:#eee2d4 url("assets/fondo-olas.svg") repeat;background-size:150px 75px;color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  .display{font-family:"Dela Gothic One",sans-serif;font-weight:400;letter-spacing:.01em;line-height:1.05}
+  .jp{font-family:"Noto Sans JP",sans-serif}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.8rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--red)}
+  .eyebrow::before{content:"";width:28px;height:2px;background:currentColor}
+  .price{color:var(--red);font-weight:700;white-space:nowrap}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:999px;font-weight:600;font-size:.98rem;transition:transform .2s ease,background .2s ease,color .2s ease}
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:var(--red);color:#fff}
+  .btn-primary:hover{background:var(--red-dark)}
+  .btn-ghost{border:1.5px solid var(--ink);color:var(--ink);background:rgba(251,247,240,.6)}
+  .btn-ghost:hover{background:var(--ink);color:#fff}
+
+  /* Navegación */
+  header{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s ease,box-shadow .3s ease}
+  header.scrolled{background:rgba(251,247,240,.95);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .logo{display:flex;align-items:baseline;gap:8px;color:var(--red);opacity:0;transition:opacity .3s}
+  header.scrolled .logo{opacity:1}
+  .logo b{font-family:"Dela Gothic One";font-size:1.5rem;font-weight:400;letter-spacing:.02em}
+  .logo span{font-size:.9rem;font-style:italic;color:var(--ink-soft)}
+  .nav ul{display:flex;gap:30px;list-style:none;font-weight:600;color:var(--ink)}
+  .nav ul a{position:relative;padding:4px 0}
+  .nav ul a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+  .nav ul a:hover::after{transform:scaleX(1)}
+
+  /* Hero */
+  .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--ink);overflow:hidden}
+  /* Halo claro detrás del logo para que destaque sobre el patrón */
+  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 55% 50% at 50% 48%,rgba(248,242,234,.95) 0%,rgba(248,242,234,.6) 45%,transparent 75%)}
+  .hero > .wrap{position:relative;z-index:1;width:100%;padding-top:90px;padding-bottom:90px}
+  .hero-logo{width:min(440px,82vw);margin:-30px auto -10px;animation:rise 1s cubic-bezier(.2,.7,.2,1) both}
+  .hero p{font-size:1.15rem;color:var(--ink-soft);max-width:520px;margin:0 auto 30px;animation:rise 1s .15s cubic-bezier(.2,.7,.2,1) both}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;animation:rise 1s .3s cubic-bezier(.2,.7,.2,1) both}
+  .scroll-hint{position:absolute;left:50%;bottom:26px;z-index:2;transform:translateX(-50%);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+  .scroll-hint::after{content:"";display:block;width:1px;height:34px;margin:10px auto 0;background:linear-gradient(var(--ink-soft),transparent);animation:drip 2s ease-in-out infinite}
+  /* Olas rojas del diseño de fondo */
+  .olas{position:absolute;bottom:0;pointer-events:none;z-index:1;width:min(46vw,620px)}
+  .olas-izq{left:0;animation:olas 1.2s .2s cubic-bezier(.2,.7,.2,1) both}
+  .olas-der{right:0;transform:scaleX(-1);width:min(30vw,400px);opacity:.95}
+  @keyframes olas{from{opacity:0;transform:translateY(40px)}}
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}}
+  @keyframes drip{0%,100%{opacity:.2;transform:scaleY(.6);transform-origin:top}50%{opacity:1;transform:scaleY(1)}}
+
+  section{padding:110px 0}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:50px;flex-wrap:wrap}
+  .section-head h2{font-size:clamp(2.2rem,4.5vw,3.4rem);margin-top:12px}
+  .section-head h2 .jp{display:block;font-size:.45em;color:var(--red);font-weight:400;margin-top:8px;letter-spacing:.1em}
+  .section-head p{max-width:420px;color:var(--ink-soft)}
+
+  /* Recomendados (sin fotos) */
+  .favs{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .fav{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px 24px 26px;overflow:hidden;transition:transform .3s ease,box-shadow .3s ease,border-color .3s}
+  .fav:hover{transform:translateY(-6px);box-shadow:0 18px 40px -20px rgba(80,10,20,.35);border-color:#e2c9c0}
+  .fav .num{position:absolute;right:16px;top:6px;font-family:"Noto Sans JP";font-weight:700;font-size:4.2rem;line-height:1;color:var(--red);opacity:.08}
+  .fav .tag{display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--red);background:#f8e6e4;padding:5px 10px;border-radius:999px;margin-bottom:18px}
+  .fav h3{font-family:"Dela Gothic One";font-weight:400;font-size:1.3rem;margin-bottom:8px}
+  .fav p{font-size:.9rem;color:var(--ink-soft);margin-bottom:18px}
+  .fav .price{font-size:1.15rem}
+
+  .band{background:var(--red);color:var(--cream);overflow:hidden}
+  .marquee{display:flex;gap:48px;padding:20px 0;white-space:nowrap;animation:marquee 32s linear infinite;width:max-content}
+  .marquee span{font-family:"Dela Gothic One";font-size:1.3rem;display:inline-flex;align-items:center;gap:48px}
+  .marquee span::after{content:"寿";font-family:"Noto Sans JP";font-size:1rem;opacity:.55}
+  @keyframes marquee{to{transform:translateX(-50%)}}
+
+  /* Menú */
+  #menu{position:relative;padding-bottom:200px}
+  .menu-panel{position:relative;z-index:2;background:rgba(251,247,240,.97);border-radius:22px;padding:44px 48px 20px;box-shadow:0 30px 60px -40px rgba(80,30,20,.35);border:1px solid var(--line)}
+  .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:44px;position:sticky;top:72px;z-index:10;background:#fbf7f0;padding:14px 0;border-bottom:1px solid var(--line)}
+  .tab{border:1.5px solid var(--line);background:transparent;font:inherit;font-weight:600;font-size:.9rem;padding:9px 18px;border-radius:999px;cursor:pointer;color:var(--ink);transition:all .2s ease}
+  .tab:hover{border-color:var(--red);color:var(--red)}
+  .tab.active{background:var(--red);border-color:var(--red);color:#fff}
+  .cat{margin-bottom:64px;scroll-margin-top:170px}
+  .cat-title{display:flex;align-items:baseline;gap:16px;margin-bottom:26px;padding-bottom:14px;border-bottom:2px solid var(--ink)}
+  .cat-title h3{font-family:"Dela Gothic One";font-weight:400;font-size:1.8rem;color:var(--red)}
+  .cat-title .jp{color:var(--ink-soft);font-size:1.05rem}
+  .items{display:grid;grid-template-columns:1fr 1fr;gap:6px 56px}
+  .item{padding:16px 0;border-bottom:1px dashed var(--line)}
+  .item-top{display:flex;align-items:baseline;gap:10px}
+  .item-top h4{font-size:1.02rem;font-weight:700;letter-spacing:.01em}
+  .item-top .dots{flex:1;border-bottom:2px dotted #d9cfc2;transform:translateY(-4px)}
+  .item p{font-size:.88rem;color:var(--ink-soft);margin-top:4px}
+  .variants{display:flex;gap:18px;margin-top:8px;font-size:.88rem;font-weight:600;flex-wrap:wrap}
+  .variants span b{color:var(--red)}
+  .hidden{display:none}
+
+  /* Información */
+  .visit{background:var(--night);color:var(--cream);padding:90px 0}
+  .visit-grid{display:grid;grid-template-columns:auto 1fr;gap:70px;align-items:center}
+  .visit-logo{width:220px}
+  .info{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+  .info h4{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:#e9707f;margin-bottom:10px;font-weight:600}
+  .info p{color:rgba(251,232,196,.8);font-size:.98rem}
+
+  footer{background:#0f0b0c;color:rgba(251,232,196,.5);padding:28px 0;font-size:.86rem}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:980px){
+    .favs{grid-template-columns:1fr 1fr}
+    .visit-grid{grid-template-columns:1fr;gap:40px;text-align:center}
+    .visit-logo{margin:0 auto}
+    .nav ul{display:none}
+  }
+  @media (max-width:680px){
+    section{padding:80px 0}
+    .wrap{padding:0 16px}
+    .items,.favs,.info{grid-template-columns:1fr}
+    body{background-size:100px 50px}
+    .hero-logo{width:min(340px,86vw);margin:-20px auto -6px}
+    .hero::before{background:radial-gradient(ellipse 90% 45% at 50% 46%,rgba(248,242,234,.96) 0%,rgba(248,242,234,.6) 50%,transparent 80%)}
+    .olas{width:78vw}
+    .olas-der{width:56vw}
+    #menu{padding-bottom:120px}
+    .menu-panel{padding:26px 18px 6px;border-radius:18px}
+    .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab{flex:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="wrap nav">
+    <a href="#" class="logo"><b>TOKA</b><span>sushi bar</span></a>
+    <ul>
+      <li><a href="#recomendados">Recomendados</a></li>
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#info">Horario</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <img class="hero-logo" src="assets/logo-toka-oscuro.png" alt="Toka Sushi Bar 寿司屋">
+    <p>Rollos, arroces, aguachiles y mixología de la casa. Sushi con el sazón del Pacífico.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn btn-primary">Ver el menú →</a>
+      <a href="#recomendados" class="btn btn-ghost">Recomendados</a>
+    </div>
+  </div>
+  <span class="scroll-hint">Desliza</span>
+  <img class="olas olas-izq" src="assets/olas-rojas.svg" alt="" aria-hidden="true">
+</section>
+
+<section id="recomendados">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Lo más pedido</span>
+        <h2 class="display">Recomendados<span class="jp">人気メニュー</span></h2>
+      </div>
+      <p>Los favoritos que nuestros clientes piden una y otra vez. Hechos al momento.</p>
+    </div>
+    <div class="favs">
+      <article class="fav reveal">
+        <span class="num">一</span><span class="tag">De la casa</span>
+        <h3>Toka Roll</h3>
+        <p>Empanizado con Philadelphia, aguacate, tocino, res, pollo, camarón y surimi, gratinado con tampico.</p>
+        <span class="price">$210</span>
+      </article>
+      <article class="fav reveal">
+        <span class="num">二</span><span class="tag">Horneado</span>
+        <h3>Salmoncito Roll</h3>
+        <p>Forrado de salmón, con topping de camarón picosito y anguila.</p>
+        <span class="price">desde $195</span>
+      </article>
+      <article class="fav reveal">
+        <span class="num">三</span><span class="tag">Especial</span>
+        <h3>Arcoíris Roll</h3>
+        <p>Camarón y Philadelphia por dentro, forrado con salmón, atún, aguacate y kanikama.</p>
+        <span class="price">$220</span>
+      </article>
+      <article class="fav reveal">
+        <span class="num">四</span><span class="tag">Para compartir</span>
+        <h3>Aguachiles</h3>
+        <p>Camarones curtidos en salsa negra, roja o verde, con pepino y flor de aguacate.</p>
+        <span class="price">$239</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="band" aria-hidden="true">
+  <div class="marquee">
+    <span>ROLLOS ESPECIALES</span><span>AGUACHILES</span><span>YAKIMESHI</span><span>MEZCALITAS</span><span>TACOS</span><span>POSTRES</span>
+    <span>ROLLOS ESPECIALES</span><span>AGUACHILES</span><span>YAKIMESHI</span><span>MEZCALITAS</span><span>TACOS</span><span>POSTRES</span>
+  </div>
+</div>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Carta completa</span>
+        <h2 class="display">Nuestro menú<span class="jp">お品書き</span></h2>
+      </div>
+      <p>Filtra por categoría. Donde verás <b>Camarón / Res / Pollo</b>, eliges el ingrediente principal.</p>
+    </div>
+    <div class="menu-panel">
+      <nav class="tabs" id="tabs" aria-label="Categorías del menú"></nav>
+      <div id="menu-list"></div>
+    </div>
+  </div>
+  <img class="olas olas-der" src="assets/olas-rojas.svg" alt="" aria-hidden="true">
+</section>
+
+<section id="info" class="visit">
+  <div class="wrap visit-grid">
+    <img class="visit-logo" src="assets/logo-toka.png" alt="Toka Sushi Bar">
+    <div class="info">
+      <div><h4>Dirección</h4><p>Av. Ejemplo #123,<br>Col. Centro, Ciudad</p></div>
+      <div><h4>Horario</h4><p>Lun – Jue · 1:00 – 10:00 pm<br>Vie – Dom · 1:00 – 11:30 pm</p></div>
+      <div><h4>Redes</h4><p>@tokasushibar</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Toka Sushi Bar · 寿司屋</span>
+    <span>Precios en MXN, sujetos a cambio sin previo aviso.</span>
+  </div>
+</footer>
+
+<script>
+// ===== Menú (extraído de la carta de Toka) =====
+const V = (c,r,p)=>({c,r,p}); // variantes Camarón / Res / Pollo
+const MENU = [
+  {id:"entradas",name:"Entradas",jp:"おつまみ",items:[
+    ["Dedos de queso (2 pzs)",65,"Trozo de queso chihuahua empanizado."],
+    ["Chilitos rellenos (pz)",V(78,72,65),"Chile caribe relleno de Philadelphia con queso chihuahua y un ingrediente a elegir."],
+    ["Cronch Mazatleco",138,"Guacamole picosito con trocitos de pulpo empanizado."],
+    ["Camarones Roka",189,"Camarones capeados, salseados con aderezo roka, montados en cama de arroz y zanahoria."],
+    ["Camarones Toka",176,"Camarones sazonados con salsas negras, acompañados de cebolla y chiles fritos."],
+    ["Boneless BBQ / Búfalo",{"6 pz":125,"12 pz":166},"Trozos de pechuga salseados con la salsa de tu preferencia o naturales."],
+    ["Orden de papas",65,"Papas fritas a la francesa."]
+  ]},
+  {id:"tostadas",name:"Tostadas y Aguachiles",jp:"トスタダ & アグアチレ",items:[
+    ["Aguachiles",239,"Camarones curtidos y sazonados, bañados en salsa negra, roja o verde, con pepino y flor de aguacate."],
+    ["Tostada Sinaloense",109,"Mayonesa y base de aguacate, rico ceviche de camarón cocido."],
+    ["Tostada Oriental",109,"Mayonesa y base de aguacate, ceviche de kanikama con pulpo y camarón."],
+    ["Tostada Mixta",109,"Aderezo spicy con camarón cocido, camarón crudo, pulpo y pepino, marinados en aguachile de la casa."],
+    ["Tostada de Atún",109,"Aderezo spicy con atún en cubitos, pepino, cebolla y serrano en aguachile de la casa."],
+    ["Tostada Roka",109,"Base de aguacate con deliciosos camarones roka."]
+  ]},
+  {id:"tacos",name:"Tacos",jp:"タコス",items:[
+    ["Taqueso Toka",92,"Costra de queso rellena de camarones sazonados, con aguacate y aderezo chipotle."],
+    ["Taqueso Ranchero",109,"Costra de queso rellena de sirloin y cebolla, con aguacate y chipotle."],
+    ["Taco Pulpo Mongol",92,"Trocitos de pulpo marinado a la plancha con aguacate."],
+    ["Taco Gobernador",92,"El tradicional taco con queso y guisado de camarón ranchero."]
+  ]},
+  {id:"arroces",name:"Arroces",jp:"焼き飯",items:[
+    ["Yakimeshi Culichi",180,"Arroz frito con zanahoria, cebollín y res. Encima tampico, Philadelphia, aguacate, camarón y pollo empanizado con anguila."],
+    ["Gohan Sencillo",90,"Arroz blanco con tampico, Philadelphia y aguacate, bañado de anguila y furikake."],
+    ["Gohan Especial",159,"Gohan con tampico, Philadelphia, aguacate, anguila y furikake, con res, pollo y camarón frito."],
+    ["Gohan Crispy",149,"Arroz con tampico y Philadelphia, res, pollo y cebolla crispy con aderezo de la casa y ajonjolí."]
+  ]},
+  {id:"naturales",name:"Rollos Naturales",jp:"自然巻き",items:[
+    ["Sashimi Roll",173,"Philadelphia, aguacate, pepino y camarón, forrado con láminas de atún, serrano y soya aguachile."],
+    ["Guamuchilito",173,"Philadelphia, pepino y surimi, forrado con camarón, coronado con tampico, aguacate, anguila y ajonjolí."],
+    ["Camaroncito Roll",173,"Pepino, aguacate y camarón empanizado por dentro; encima Philadelphia con camarón, tampico y anguila."],
+    ["Avocado Roll",V(135,125,115),"Philadelphia, pepino e ingrediente a elegir, forrado de láminas de aguacate."],
+    ["Aguachile Roll",210,"Philadelphia, aguacate, pepino y camarón, coronado con camarones curtidos en soya aguachile."],
+    ["Massago Roll",173,"Philadelphia, pepino, aguacate y atún, forrado con masago y coronado con tampico."],
+    ["Greñudito",173,"Philadelphia, aguacate, pepino y camarón; kanikama spicy, camarones empanizados, anguila y siriacha."],
+    ["Fushion Salmón",V(185,175,170),"Pepino, aguacate e ingrediente a elegir, forrado de Philadelphia y salmón, con tampico y furikake."],
+    ["Arcoíris Roll",220,"Camarón, Philadelphia y pepino por dentro; forrado con salmón, atún, aguacate y kanikama con tuna spicy."],
+    ["Camarón Crown",173,"Philadelphia, pepino, aguacate y res empanizada, forrado de camarón con aderezo cilantro y anguila."]
+  ]},
+  {id:"especiales",name:"Rollos Especiales",jp:"特製巻き",items:[
+    ["Ishiro Roll",210,"Alga por fuera, rollo empanizado con Philadelphia, aguacate, pepino, kanikama y camarón; topping kanikama spicy."],
+    ["Abunai",210,"Rollo natural con Philadelphia, aguacate, pepino, kanikama y camarón; topping kanikama spicy, atún y masago."],
+    ["Kanikama Roll",V(185,175,170),"Aderezo de cilantro, Philadelphia, aguacate, pepino; por fuera ajonjolí y kanikama hot."],
+    ["Toro Roll",185,"Res marinada spicy y empanizada, caribe, tocino, aguacate y pepino; Philadelphia y manchego por fuera."],
+    ["Caramelo Roll",173,"Pepino, aguacate, camarón empanizado, forrado con Philadelphia y surimi; kanikama frita con aderezo caramelo."],
+    ["Tuna Green",220,"Forrado con atún y aguacate, relleno de pepino y salmón, topping de camarón y cebollín."],
+    ["Cordón Campechano",210,"Pollo y tocino forrado de togarashi, topping de camarones curtidos, cebolla morada y atún."],
+    ["Toka Roll",210,"Empanizado con Philadelphia, aguacate, pepino, tocino, res, pollo, camarón y surimi, gratinado con tampico."]
+  ]},
+  {id:"horneados",name:"Rollos Horneados",jp:"焼き巻き",items:[
+    ["Salmoncito Roll",V(215,205,195),"Aguacate, pepino y Philadelphia con ingrediente a elegir, forrado de salmón, camarón picosito y anguila."],
+    ["Tokio",210,"Philadelphia, aguacate, pepino y camarón; topping de kanikama, camarón, pulpo y chihuahua."],
+    ["Carnívoro",210,"Res, Philadelphia, aguacate y pepino; topping de res, tocino, serrano y anguila."],
+    ["Del Chef",210,"Philadelphia, pepino, aguacate y camarón forrado con masago; camarón y pulpo con aderezo roca."],
+    ["Fuji Roll",190,"Empanizado con Philadelphia, aguacate, pepino, pollo y surimi, súper gratinado con tocino y BBQ."],
+    ["Aguacatito Roll",V(210,195,185),"Philadelphia y pepino forrado con aguacate; picosito de chihuahua con camarón y anguila."],
+    ["Corona del Rey",190,"Philadelphia, aguacate, pepino, zanahoria y camarón; topping de pollo, serrano, tocino y chihuahua."],
+    ["Kenko Sushi",145,"Vegetariano: pepino, aguacate, zanahoria y Philadelphia gratinado con serrano, aderezo cilantro y anguila."],
+    ["Bombón Roll",185,"Sin arroz, alga capeada rellena de camarón, pepino, tampico, aguacate y Philadelphia; cebolla crispy."],
+    ["Roca Roll",185,"Rollo capeado, alga por fuera, camarón, Philadelphia, pepino y aguacate con camarones roca."]
+  ]},
+  {id:"empanizados",name:"Rollos Empanizados",jp:"天ぷら巻き",items:[
+    ["Pícara Viborita",180,"Res, camarón, Philadelphia, aguacate y pepino, súper gratinado con tocino."],
+    ["BBQ Roll",175,"Pollo, Philadelphia, pepino y aguacate; topping de pollo empanizado marinado en BBQ."],
+    ["Salads Roll",175,"Res, Philadelphia, pepino; zanahoria y cebollín en spicy, coronado con aguacate, anguila y ajonjolí."],
+    ["Tres Quesos",145,"Res, pollo, pepino, aguacate y Philadelphia, con 3 quesos dentro del empanizado."],
+    ["Rancherito",175,"Res, tocino, serrano, Philadelphia y pepino, con topping de guacamole."],
+    ["Mar y Tierra",135,"Res y camarón, Philadelphia, aguacate y pepino."],
+    ["Chon",160,"Res, camarón, aguacate y pepino; por fuera Philadelphia, chihuahua y cangrejo."],
+    ["Cielo, Mar y Tierra",160,"Camarón, pollo, res, Philadelphia, pepino y aguacate."],
+    ["Cordón Blue",145,"Pollo, tocino, Philadelphia, aguacate y pepino, con Philadelphia y chihuahua."],
+    ["Doble G",175,"Philadelphia, aguacate, pepino; topping de pollo, res y cebolla crispy con aderezo de la casa."],
+    ["Bomba Especial",190,"Bola de arroz rellena de res, pollo, camarón, Philadelphia y tampico, gratinada con chipotle."],
+    ["Gordito Alegre",185,"Pepino, aguacate, res, camarón, tocino y 3 quesos, coronado con tampico picoso."],
+    ["Bomba",V(160,150,140),"Bola de arroz rellena de tampico, Philadelphia e ingrediente a elegir, aguacate encima."]
+  ]},
+  {id:"bebidas",name:"Bebidas",jp:"ドリンク",items:[
+    ["Té refill",42,""],["Té litro",45,""],["Refresco Coca-Cola",45,""],
+    ["Limonada",{"Natural":45,"Mineral":55},""],
+    ["Fresa-limón",{"Natural":55,"Mineral":65},""],
+    ["Agua natural",30,""],
+    ["Yukï Lemon",80,"Refrescante frapeado de limón decorado con Tajín."],
+    ["Fresada",80,"Frappé de fresa con mermelada de fresa y Tajín."],
+    ["Mangoneada",85,"Frappé de mango picosito con chamoy y Tajín."]
+  ]},
+  {id:"mixologia",name:"Mixología & Drinks",jp:"カクテル",items:[
+    ["Piña Traicionera",179,"Piñada picosa con tequila."],
+    ["Mango Loca",179,"Frappé de mango con chamoy, Tajín y tequila."],
+    ["Sunkai Naranja",179,"Naranjada mineral, ron de naranja, tequila."],
+    ["Palomazo",179,"Toronjada mineral, limón, tequila."],
+    ["Azulito",179,"Jugo de uvas y arándano, ron y curazao."],
+    ["Gin Berry",195,"Gin, frutos rojos, limón y agua tónica."],
+    ["Gin Jamaica",195,"Gin con jamaica y agua tónica."],
+    ["Gin Mango",195,"Gin, mango y agua tónica."],
+    ["Michelove",155,"Clamato, salsas negras, limón y la cerveza de tu gusto."],
+    ["Vaso chelado",38,"Hielo, jugo de limón."],
+    ["Rainbow",179,"Vodka, curazao azul y jugo de naranja con efecto degradado."],
+    ["Margarita",195,"Tequila Dobel, limón y licor de naranja."],
+    ["Piña Colada",179,"Bacardí Coco, jugo de piña y leche de coco."],
+    ["El Triste",159,"Bacardí, limón, agua mineral y un toque de Coca-Cola."],
+    ["Tequila Sunrise",195,"Tequila Dobel, jugo de naranja y granadina."],
+    ["Miami Coco",179,"Bacardí Blanco, Bacardí Coco, mango y leche de coco."],
+    ["Blue Orange",179,"Vodka, curazao azul, naranja y Sprite."],
+    ["Beso Negro",179,"Vodka, jamaica, piña, limón y curazao."],
+    ["Carajillo Toka",135,"Café, Baileys, mazapán y canela."]
+  ]},
+  {id:"mezcalitas",name:"Mezcalitas Toka",jp:"トーカ メスカリータ",items:[
+    ["Piña",185,"Mezcal con piña y un toque de Tajín."],
+    ["Jamaica",185,"Mezcal con jamaica, limón y agua mineral."],
+    ["Horchata",185,"Mezcal con leche, coco y canela."],
+    ["Cítricos",185,"Mezcal con naranja, toronja y limón."],
+    ["Fresh",185,"Mezcal con pepino fresco, limón y jarabe natural."]
+  ]},
+  {id:"cervezas",name:"Cervezas & Shots",jp:"ビール & ショット",items:[
+    ["Modelo Especial",58,""],["Cerveza nacional 1/2",48,""],
+    ["Baby Mango c/tequila (5)",110,""],
+    ["Shot 2 oz Black Label",126,""],["Shot 2 oz Maestro Dobel",104,""],
+    ["Shot 2 oz Don Julio 70",147,""],["Shot 2 oz Gran Malo",79,""],["Shot 2 oz Absolut",89,""]
+  ]},
+  {id:"postres",name:"Postres",jp:"デザート",items:[
+    ["Hashi Ice",120,"2 bolas de nieve de vainilla con fresas y barquillos de chocolate."],
+    ["Choco Kory",145,"Brownie de chocolate con nieve de vainilla, fresas y chocolate."],
+    ["Tarta Vasca",145,"Rebanada de tarta vasca con nieve y fresas, decorada con canela."],
+    ["Kyoto Bliss",145,"Cheesecake con bola de nieve y fresa en cubitos, rallado con chocolate."],
+    ["Geisha Berry",120,"Fresas con crema, crema batida y chocolate."]
+  ]}
+];
+
+const tabs = document.getElementById("tabs");
+const list = document.getElementById("menu-list");
+const fmt = n => "$" + n;
+
+function priceHTML(p){
+  if (typeof p === "number") return `<span class="price">${fmt(p)}</span>`;
+  return "";
+}
+function variantsHTML(p){
+  if (typeof p === "number") return "";
+  const map = ("c" in p) ? {"Camarón":p.c,"Res":p.r,"Pollo":p.p} : p;
+  return `<div class="variants">${Object.entries(map).map(([k,v])=>`<span>${k} <b>${fmt(v)}</b></span>`).join("")}</div>`;
+}
+
+tabs.innerHTML = `<button class="tab active" data-f="all">Todo</button>` +
+  MENU.map(c=>`<button class="tab" data-f="${c.id}">${c.name}</button>`).join("");
+
+list.innerHTML = MENU.map(c=>`
+  <div class="cat" data-cat="${c.id}" id="cat-${c.id}">
+    <div class="cat-title"><h3>${c.name}</h3><span class="jp">${c.jp}</span></div>
+    <div class="items">
+      ${c.items.map(([n,p,d])=>`
+        <div class="item">
+          <div class="item-top"><h4>${n}</h4><span class="dots"></span>${priceHTML(p)}</div>
+          ${d?`<p>${d}</p>`:""}
+          ${variantsHTML(p)}
+        </div>`).join("")}
+    </div>
+  </div>`).join("");
+
+tabs.addEventListener("click", e=>{
+  const b = e.target.closest(".tab"); if(!b) return;
+  tabs.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active", t===b));
+  const f = b.dataset.f;
+  list.querySelectorAll(".cat").forEach(c=>c.classList.toggle("hidden", f!=="all" && c.dataset.cat!==f));
+  const top = document.getElementById("menu").offsetTop + 60;
+  if (window.scrollY > top + 200) window.scrollTo({top, behavior:"smooth"});
+});
+
+// Header al hacer scroll
+const header = document.getElementById("top");
+const onScroll = ()=>header.classList.toggle("scrolled", window.scrollY > 40);
+window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
+
+// Aparición suave
+const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
